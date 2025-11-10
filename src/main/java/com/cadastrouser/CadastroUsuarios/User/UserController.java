@@ -1,15 +1,27 @@
 package com.cadastrouser.CadastroUsuarios.User;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/userapi")
 public class UserController {
 
-    @GetMapping("/boasvindas")
-    public String boasVindas() {
-        return "Essa é minha rota teste";
+    @Autowired
+    private UserRepository userRepository;
+
+    // List all users
+    @GetMapping("/user")
+    public List<UserModel> getAllUsers(){
+        return userRepository.findAll();
     }
+
+    // create user
+    @PostMapping ("/user")
+    public UserModel createUser(@RequestBody UserModel User) {
+        return userRepository.save(User);
+    }
+
 }
