@@ -18,7 +18,7 @@ public class UserModel {
     private Long id;
     private String nome;
     private String email;
-    private String pass;
+    private String password;
     private String cidade;
     private String estado;
     private int idade;
