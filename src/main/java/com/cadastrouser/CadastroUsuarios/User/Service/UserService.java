@@ -4,6 +4,8 @@ import com.cadastrouser.CadastroUsuarios.Exception.ResourceNotFoundException;
 import com.cadastrouser.CadastroUsuarios.User.Model.User;
 import com.cadastrouser.CadastroUsuarios.User.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,13 +16,15 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
     public User createUser(User usuario) {
-        // Aqui você poderia, por exemplo, encriptar senha:
-        // usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
         return userRepository.save(usuario);
     }
 

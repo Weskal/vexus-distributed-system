@@ -14,41 +14,41 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
     // List all users
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> usuarios = userService.getAllUsers();
         return ResponseEntity.ok(usuarios);
     }
 
     // Create user = 201
-    @PostMapping ("/")
+    @PostMapping ("/user")
     public ResponseEntity<User> createUser(@RequestBody User usuario) {
         User novoUsuario = userService.createUser(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
 
     // List user by id
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     // Update user by id
-    @PutMapping("/{id}")
+    @PutMapping("/user/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User novosDados) {
         User usuarioAtualizado = userService.updateUser(id, novosDados);
         return ResponseEntity.ok(usuarioAtualizado);
     }
 
     // Delete user by id
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/user/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok("Usuário com ID " + id + " foi deletado com sucesso.");
