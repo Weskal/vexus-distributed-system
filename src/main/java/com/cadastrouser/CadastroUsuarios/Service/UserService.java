@@ -1,8 +1,9 @@
-package com.cadastrouser.CadastroUsuarios.User.Service;
+package com.cadastrouser.CadastroUsuarios.Service;
 
 import com.cadastrouser.CadastroUsuarios.Exception.ResourceNotFoundException;
-import com.cadastrouser.CadastroUsuarios.User.Model.User;
-import com.cadastrouser.CadastroUsuarios.User.Repository.UserRepository;
+import com.cadastrouser.CadastroUsuarios.Model.User;
+import com.cadastrouser.CadastroUsuarios.Repository.UserRepository;
+import com.cadastrouser.CadastroUsuarios.User.RegisterDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,9 +24,21 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User createUser(User usuario) {
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-        return userRepository.save(usuario);
+    public User createUser(RegisterDTO dto) {
+
+        if (userRepository.existsByEmail(dto.email())) {
+            throw new RuntimeException("Already registred email!");
+        }
+
+        User user = new User();
+        user.setNome(dto.nome());
+        user.setEmail(dto.email());
+        user.setPassword(passwordEncoder.encode(dto.password())); // IMPORTANTE: criptografar!
+        user.setCidade(dto.cidade());
+        user.setEstado(dto.estado());
+        user.setIdade(dto.idade());
+
+        return userRepository.save(user);
     }
 
     public User getUserById(Long id) {

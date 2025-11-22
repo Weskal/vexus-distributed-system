@@ -1,37 +1,26 @@
-package com.cadastrouser.CadastroUsuarios.User.Controller;
+package com.cadastrouser.CadastroUsuarios.Controller;
 
-import com.cadastrouser.CadastroUsuarios.Exception.ResourceNotFoundException;
-import com.cadastrouser.CadastroUsuarios.User.Model.User;
-import com.cadastrouser.CadastroUsuarios.User.Repository.UserRepository;
-import com.cadastrouser.CadastroUsuarios.User.Service.UserService;
+import com.cadastrouser.CadastroUsuarios.Model.User;
+import com.cadastrouser.CadastroUsuarios.Service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/userapi")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
     // List all users
-    @GetMapping
+    @GetMapping ("/users")
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> usuarios = userService.getAllUsers();
         return ResponseEntity.ok(usuarios);
-    }
-
-    // Create user = 201
-    @PostMapping ("/user")
-    public ResponseEntity<User> createUser(@RequestBody User usuario) {
-        User novoUsuario = userService.createUser(usuario);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
 
     // List user by id
