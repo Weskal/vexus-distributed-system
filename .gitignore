@@ -40,3 +40,11 @@ build/
 
 # Sistema
 **/.DS_Store
+
+# Tests
+
+*/tests
+
+*.env
+*venv
+*__pycache__
